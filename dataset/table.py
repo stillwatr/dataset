@@ -418,7 +418,7 @@ class Table(object):
             return self.table.c[column].like(value + "%")
         if op in ("endswith",):
             return self.table.c[column].like("%" + value)
-        return false()
+        return self.table.c[column].op(op)(value)
 
     def _args_to_clause(self, args, clauses=()):
         clauses = list(clauses)
