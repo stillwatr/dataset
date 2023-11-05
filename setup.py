@@ -31,6 +31,7 @@ setup(
     zip_safe=False,
     install_requires=[
         "sqlalchemy >= 1.3.2, < 2.0.0",
+        "sqlalchemy-utils >= 0.41.1",
         "alembic >= 0.6.2",
         "banal >= 1.0.1",
     ],

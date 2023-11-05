@@ -22,6 +22,7 @@ def connect(
     row_type=row_type,
     sqlite_wal_mode=True,
     on_connect_statements=None,
+    create_if_not_exists=False
 ):
     """Opens a new connection to a database.
 
@@ -59,4 +60,5 @@ def connect(
         row_type=row_type,
         sqlite_wal_mode=sqlite_wal_mode,
         on_connect_statements=on_connect_statements,
+        create_if_not_exists=create_if_not_exists
     )

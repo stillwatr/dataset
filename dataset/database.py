@@ -8,6 +8,10 @@ from sqlalchemy.schema import MetaData
 from sqlalchemy.util import safe_reraise
 from sqlalchemy import event
 
+from sqlalchemy_utils import create_database
+from sqlalchemy_utils import database_exists
+from sqlalchemy_utils import drop_database
+
 from alembic.migration import MigrationContext
 from alembic.operations import Operations
 
@@ -25,6 +29,7 @@ class Database(object):
     def __init__(
         self,
         url,
+        create_if_not_exists=False,
         schema=None,
         engine_kwargs=None,
         ensure_schema=True,
@@ -33,6 +38,11 @@ class Database(object):
         on_connect_statements=None,
     ):
         """Configure and connect to the database."""
+
+        if not database_exists(url) and create_if_not_exists:
+            print("[dataset] create database")
+            create_database(url)
+
         if engine_kwargs is None:
             engine_kwargs = {}
 
@@ -286,6 +296,11 @@ class Database(object):
         return self.create_table(
             table_name, primary_id, primary_type, primary_increment
         )
+
+    def drop(self):
+        """Drop the database."""
+        print("[dataset] drop database")
+        drop_database(self.url)
 
     def __getitem__(self, table_name):
         """Get a given table."""
