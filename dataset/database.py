@@ -40,7 +40,6 @@ class Database(object):
         """Configure and connect to the database."""
 
         if not database_exists(url) and create_if_not_exists:
-            print("[dataset] create database")
             create_database(url)
 
         if engine_kwargs is None:
@@ -299,8 +298,7 @@ class Database(object):
 
     def drop(self):
         """Drop the database."""
-        print("[dataset] drop database")
-        drop_database(self.url)
+        return drop_database(self.url)
 
     def __getitem__(self, table_name):
         """Get a given table."""
