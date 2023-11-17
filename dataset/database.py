@@ -29,7 +29,6 @@ class Database(object):
     def __init__(
         self,
         url,
-        create_if_not_exists=False,
         schema=None,
         engine_kwargs=None,
         ensure_schema=True,
@@ -38,9 +37,6 @@ class Database(object):
         on_connect_statements=None,
     ):
         """Configure and connect to the database."""
-
-        if not database_exists(url) and create_if_not_exists:
-            create_database(url)
 
         if engine_kwargs is None:
             engine_kwargs = {}
@@ -295,6 +291,14 @@ class Database(object):
         return self.create_table(
             table_name, primary_id, primary_type, primary_increment
         )
+
+    def create(self) -> None:
+        """Creates the database."""
+        return create_database(self.url)
+
+    def exists(self) -> bool:
+        """Returns true if the database exists."""
+        return database_exists(self.url)
 
     def drop(self):
         """Drop the database."""
